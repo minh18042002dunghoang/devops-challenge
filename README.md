@@ -1,0 +1,1 @@
+This is a repository of solutions to each problem I have worked on but the challenges the company presented. The solutions I have come up with are based on the internship position I have been working on over the past week.
