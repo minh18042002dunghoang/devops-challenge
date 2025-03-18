@@ -43,3 +43,9 @@ Scaling Plans
 - Caching Strategy: Increase the use of ElastiCache to reduce database load.
 - Serverless Architecture: Utilize more AWS Lambda functions to handle specific tasks without managing servers.
 - Global Reach: Use AWS Global Accelerator to improve performance for users worldwide.
+
+Architectural diagram:
+[User] -> [CloudFront] -> [API Gateway] -> [Microservices (ECS/EKS)] -> [DynamoDB/RDS]-> [ElastiCache] -> [SQS] -> [CloudWatch]
+                                      
+                                     
+                                     
