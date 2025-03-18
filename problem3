@@ -1,0 +1,37 @@
+Provide my solution here:
+To troubleshoot the issue of the VM running at 99% memory usage, we need to systematically identify the root cause and implement recovery steps. Here’s a detailed approach:
+1. Initial Assessment
+   - Verify the Issue: Confirm that the high memory usage is indeed a memory issue and not a storage issue. Use commands like `free -h` to check memory usage and `df -h` to check disk usage.
+   - Check NGINX Status: Ensure that NGINX is running properly using `systemctl status nginx`.
+
+2. Identify Processes Consuming Memory
+   - Top Memory-Consuming Processes: Use `top` or `htop` to identify processes consuming the most memory. Look for any unexpected processes or high memory usage by NGINX.
+   - Detailed Process Information: Use `ps aux --sort=-%mem | head` to get a detailed list of processes sorted by memory usage.
+
+3. Analyze NGINX Configuration
+   - Worker Processes: Check the NGINX configuration file (`/etc/nginx/nginx.conf`) for the number of worker processes (`worker_processes`). Ensure it is set appropriately for your VM’s resources.
+   - Worker Connections: Review the `worker_connections` setting to ensure it is not too high, which can lead to excessive memory usage.
+   - Caching: If NGINX is configured to cache responses, check the cache size and usage. Large caches can consume significant memory.
+
+4. Check for Memory Leaks
+   - NGINX Logs: Review NGINX logs (`/var/log/nginx/error.log` and `/var/log/nginx/access.log`) for any errors or unusual activity that might indicate a memory leak.
+   - System Logs: Check system logs (`/var/log/syslog` or `journalctl -xe`) for any related errors or warnings.
+
+5. Monitor and Optimize
+   - Real-Time Monitoring: Use tools like `vmstat`, `sar`, or `glances` to monitor memory usage in real-time and identify patterns or spikes.
+   - Optimize NGINX: Adjust NGINX settings based on your findings. For example, reduce the number of worker processes or connections if they are too high.
+
+6. Recovery Steps
+   - Restart NGINX: If a memory leak is suspected, restarting NGINX can temporarily alleviate the issue. Use `systemctl restart nginx`.
+   - Scale Resources: If the VM is consistently running out of memory, consider scaling up the VM’s memory or scaling out by adding more VMs and distributing the load.
+   - Application Optimization: Work with the development team to optimize the upstream services to reduce the load on the NGINX server.
+
+7. Preventive Measures
+   - Regular Monitoring: Implement continuous monitoring and alerting for memory usage to catch issues early.
+   - Automated Scaling: Use auto-scaling features of your cloud provider to automatically adjust resources based on load.
+   - Regular Updates: Keep NGINX and the underlying OS updated to benefit from performance improvements and bug fixes.
+
+ Expected Scenarios and Impacts
+   - High Traffic Load: Sudden spikes in traffic can cause high memory usage. Impact includes slow response times and potential service outages.
+   - Memory Leak in NGINX: A bug or misconfiguration in NGINX can cause memory leaks. Impact includes gradual degradation of performance and eventual service failure.
+   - Misconfigured NGINX: Incorrect settings in NGINX can lead to excessive memory consumption. Impact includes inefficient resource usage and potential crashes.
